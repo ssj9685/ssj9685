@@ -1,5 +1,5 @@
 ### Hi there 👋
-![header] test
+![header](https://capsule-render.vercel.app/api?type=soft&color=auto&height=150&section=header&text=ssj9685&fontSize=70&animation=twinkling)
 Here are some ideas to get you started:
 
 - 🔭 I’m currently working on ...
