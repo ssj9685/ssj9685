@@ -5,6 +5,9 @@
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=ssj9685&repo=dt-mic)](https://github.com/ssj9685/dt-mic) 
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=ssj9685&repo=insurance_webapp)](https://github.com/ssj9685/insurance_webapp)
 
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=ssj9685&layout=compact)](https://github.com/ssj9685/github-readme-stats)
+
+
 
 - 🌱 I’m currently learning WebRTC
 - ⚡ Fun fact: ???
