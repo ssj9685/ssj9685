@@ -1,4 +1,4 @@
-### #6f7a90
+### I like #6f7a90
 
 [![ssj9685's GitHub stats](https://github-readme-stats.vercel.app/api?username=ssj9685&show_icons=true&bg_color=6f7a90&title_color=ffffff&text_color=ffffff&icon_color=ffffff&hide_border=true)](https://github.com/ssj9685)
 
