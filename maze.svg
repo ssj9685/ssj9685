@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+  <style>
+    /* theme */
+    .bg { fill: #0b0b0b; }
+    .dim { opacity: .28; }
+    .hint { opacity: .75; }
+
+    /* path visuals */
+    .rail { fill: none; stroke: #ffffff; stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; opacity: .18; }
+    .lane { fill: none; stroke: #ffffff; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; opacity: .35; }
+
+    /* progress line (hidden until active) */
+    .prog {
+      fill: none; stroke: #ffffff; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      opacity: 0;
+      transition: opacity 200ms ease;
+      animation: none;
+    }
+
+    /* UI */
+    .label { font: 600 14px ui-sans-serif, system-ui, -apple-system; fill: #ffffff; opacity: .8; letter-spacing: .08em; }
+    .tiny  { font: 500 12px ui-sans-serif, system-ui, -apple-system; fill: #ffffff; opacity: .55; }
+    .chip  { fill: #ffffff; opacity: .10; rx: 12; }
+
+    /* game logic: start is a hover gate.
+       While hovering #gate, we "arm" the run: show progress + animate dashoffset to 0.
+       But you must also keep hovering the path overlay (the invisible hit zone) to maintain it.
+       If hover breaks, animation stops and resets (because it only runs under :hover). */
+    #gate:hover ~ #run .prog { opacity: .95; animation: fill 3.2s linear forwards; }
+    #gate:hover ~ #run .clear { opacity: 0; }
+    #gate:hover ~ #run .fail { opacity: .0; }
+
+    /* The trick: require hover on the hit zone too.
+       If you leave the lane, #hit is not hovered, so we cancel the animation by overriding it. */
+    #gate:hover ~ #run:not(:has(#hit:hover)) .prog { animation: none; stroke-dashoffset: 1200; opacity: .25; }
+
+    /* CLEAR message shows only when the animation is at end.
+       We fake it: when progress fills, it stays at dashoffset 0, and we show clear badge using animation delay. */
+    #gate:hover ~ #run:has(#hit:hover) .clear { animation: show 0ms linear forwards; animation-delay: 3.2s; }
+    #gate:hover ~ #run:has(#hit:hover) .clear { opacity: 0; }
+
+    @keyframes fill { to { stroke-dashoffset: 0; } }
+    @keyframes show { to { opacity: .9; } }
+
+    /* accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .prog { transition: none; animation: none !important; }
+    }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="900" height="220"/>
+
+  <!-- Title chips (no "talking", just minimal hints) -->
+  <rect class="chip" x="22" y="18" width="118" height="30"/>
+  <text class="label" x="36" y="38">HOVER MAZE</text>
+  <text class="tiny" x="160" y="38">stay on the line until it completes</text>
+
+  <!-- START gate (hover this to arm) -->
+  <g id="gate" transform="translate(22,70)">
+    <rect class="chip" x="0" y="0" width="120" height="44"/>
+    <text class="label" x="20" y="28">START</text>
+  </g>
+
+  <!-- Run area -->
+  <g id="run">
+    <!-- the path (a quiet, structural shape) -->
+    <path id="p" class="rail" d="M170 92 C 260 22, 330 180, 420 110 S 600 40, 690 110 S 820 180, 860 120"/>
+    <path class="lane" d="M170 92 C 260 22, 330 180, 420 110 S 600 40, 690 110 S 820 180, 860 120"/>
+    <path class="prog" d="M170 92 C 260 22, 330 180, 420 110 S 600 40, 690 110 S 820 180, 860 120"/>
+
+    <!-- Invisible hit zone on top of the lane (thick transparent stroke). This is what you must hover. -->
+    <path id="hit" d="M170 92 C 260 22, 330 180, 420 110 S 600 40, 690 110 S 820 180, 860 120"
+          fill="none" stroke="#000000" stroke-opacity="0" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- CLEAR badge (appears after duration if you stayed hovered) -->
+    <g class="clear" style="opacity:0" transform="translate(730,160)">
+      <rect class="chip" x="0" y="0" width="140" height="38"/>
+      <text class="label" x="20" y="26">CLEAR</text>
+    </g>
+
+    <!-- micro philosophy as tooltip only -->
+    <title>Order is discovered, not imposed.</title>
+  </g>
+</svg>
